@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Quản lý danh mục</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="category.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <!-- Sidebar -->
+        <div class="col-md-2 sidebar p-3">
+          <h5>Ecommerce</h5>
+          <ul class="nav flex-column">
+            <li class="nav-item"><a href="#" class="nav-link">Tổng kê</a></li>
+            <li class="nav-item">
+              <a href="category.html" class="nav-link active">Danh mục</a>
+            </li>
+            <li class="nav-item"><a href="#" class="nav-link">Sản phẩm</a></li>
+          </ul>
+        </div>
+
+        <!-- Main content -->
+        <div class="col-md-10 p-4">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h4>Danh mục</h4>
+            <button class="btn btn-primary" onclick="openModal()">
+              + Thêm mới danh mục
+            </button>
+          </div>
+
+          <!-- Filter + Search -->
+          <div class="d-flex justify-content-end gap-2 mb-3">
+            <select class="form-select w-auto">
+              <option selected>Lọc theo trạng thái</option>
+              <option value="1">Đang hoạt động</option>
+              <option value="2">Ngưng hoạt động</option>
+            </select>
+            <input
+              type="text"
+              class="form-control w-auto"
+              placeholder="Tìm kiếm danh mục..."
+              style="min-width: 200px"
+            />
+          </div>
+
+          <!-- Table -->
+          <table class="table table-bordered bg-white">
+            <thead class="table-light">
+              <tr>
+                <th>Mã danh mục</th>
+                <th>Tên danh mục</th>
+                <th>Trạng thái</th>
+                <th class="text-center">Chức năng</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+
+          <nav aria-label="Page navigation">
+            <ul class="pagination justify-content-center">
+              <li class="page-item disabled">
+                <a class="page-link" href="#">Trước</a>
+              </li>
+              <li class="page-item active">
+                <a class="page-link" href="#">1</a>
+              </li>
+              <li class="page-item"><a class="page-link" href="#">2</a></li>
+              <li class="page-item"><a class="page-link" href="#">3</a></li>
+              <li class="page-item"><a class="page-link" href="#">Sau</a></li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </div>
+    <!-- thêm danh mục-->
+
+    <div class="overlay" id="overlay"></div>
+    <div class="modal" id="modal">
+      <form onsubmit="addCategory(event)">
+        <h3>Thêm mới danh mục</h3>
+        <span id="close" onclick="closeModal()">X</span>
+        <div class="container mt-4">
+          <div class="mb-3">
+            <label for="maDanhMuc" class="form-label">Mã danh mục *</label>
+            <input
+              type="text"
+              class="form-control"
+              id="maDanhMuc"
+              name="idCate"
+            />
+            <p id="id-error">Danh mục không được để trống</p>
+          </div>
+          <div class="mb-3">
+            <label for="tenDanhMuc" class="form-label">Tên danh mục *</label>
+            <input
+              type="text"
+              class="form-control"
+              id="tenDanhMuc"
+              name="name"
+            />
+            <p id="name-error">Tên danh mục không được để trống</p>
+          </div>
+          <div class="mb-3">
+            <label class="form-label d-block">Trạng thái</label>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="active"
+                name="status"
+                value="true"
+                checked
+              />
+              <label class="form-check-label" for="active"
+                >Đang hoạt động</label
+              >
+            </div>
+            <div class="form-check form-check-inline">
+              <input
+                class="form-check-input"
+                type="radio"
+                id="inactive"
+                name="status"
+                value="false"
+              />
+              <label class="form-check-label" for="inactive"
+                >Ngưng hoạt động</label
+              >
+            </div>
+          </div>
+          <hr />
+          <div class="d-flex justify-content-end">
+            <button
+              type="button"
+              class="btn btn-secondary me-2"
+              onclick="closeModal()"
+            >
+              Hủy
+            </button>
+            <button type="submit" class="btn btn-primary" id="button-submit">
+              Thêm
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="category.js"></script>
+  </body>
+</html>

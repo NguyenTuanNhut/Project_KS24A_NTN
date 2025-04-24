@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>signup</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="../css/login.css" />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="card shadow p-4">
+            <h3 class="text-center">Đăng ký tài khoản</h3>
+            <p class="text-center text-muted">
+              Đăng ký tài khoản để sử dụng dịch vụ
+            </p>
+
+            <form class="con-form" onsubmit="register(event)">
+              <div class="row mb-3">
+                <div class="col">
+                  <label for="lastname" class="form-label">Họ và tên đệm</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="lastname"
+                    name="lastName"
+                  />
+                  <p id="lastName-error">không được để trống</p>
+                </div>
+                <div class="col">
+                  <label for="firstname" class="form-label">Tên</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="firstname"
+                    name="name"
+                  />
+                  <p id="name-error">không được để trống</p>
+                </div>
+              </div>
+
+              <div class="mb-3">
+                <label for="email" class="form-label">Email</label>
+                <input
+                  type="email"
+                  class="form-control"
+                  id="email"
+                  placeholder="you@company.com"
+                  name="email"
+                />
+                <p id="email-error0">không được để trống</p>
+                <p id="email-error1">không hợp lệ</p>
+                <p id="email-error2">đã tồn tại</p>
+              </div>
+
+              <div class="mb-3">
+                <label for="password" class="form-label">Mật khẩu</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  name="password"
+                />
+                <p id="password-error1">mật khẩu không được để trống</p>
+              </div>
+
+              <div class="mb-3">
+                <label for="confirm-password" class="form-label"
+                  >Xác nhận mật khẩu</label
+                >
+                <input
+                  type="password"
+                  class="form-control"
+                  id="confirm-password"
+                  name="confirmPassword"
+                />
+                <p id="password-error0">mật khẩu không trùng khớp</p>
+              </div>
+
+              <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="terms" />
+                <label class="form-check-label" for="terms">
+                  Bạn đồng ý với <a href="#">chính sách và điều khoản</a>
+                </label>
+              </div>
+
+              <button type="submit" class="btn btn-primary w-100">
+                Đăng ký
+              </button>
+            </form>
+
+            <p class="text-center mt-3">
+              Bạn đã có tài khoản? <a href="signin.html">Đăng nhập</a>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/login.js"></script>
+  </body>
+</html>
