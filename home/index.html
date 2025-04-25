@@ -1,14 +1,193 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Trang Chủ - Cửa Hàng Công Nghệ</title>
+    <link rel="stylesheet" href="style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
   </head>
   <body>
+    <!-- Header -->
     <header>
-      <img src="../source/Logo.png" alt="" />
-      <input type="text" placeholder="   tìm kiếm" />
+      <nav class="navbar navbar-expand-lg bg-body-tertiary">
+        <div class="container-fluid">
+          <img src="../source/Logo.png" alt="" />
+          <form class="d-flex search-box" role="search">
+            <input
+              class="form-control me-2"
+              type="search"
+              placeholder="Tìm kiếm"
+              aria-label="Search"
+            />
+            <span>
+              <i class="fa-solid fa-magnifying-glass search-icon"></i>
+            </span>
+          </form>
+
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href=""
+                  >Trang chủ</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Giới thiệu</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">Liên hệ</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <div class="icons">
+          <i class="fas fa-user"></i>
+          <i class="fas fa-shopping-cart"></i>
+        </div>
+      </nav>
     </header>
+    <nav></nav>
+    <!-- Banner -->
+    <section class="Banner">
+      <img src="../source/Banner.png" alt="" />
+    </section>
+
+    <!-- Categories -->
+    <section class="categories">
+      <h2>Danh mục sản phẩm</h2>
+      <div class="category-buttons">
+        <button>Tất cả</button>
+        <button>Điện thoại</button>
+        <button>Tai nghe</button>
+        <button>Đồng hồ</button>
+        <button>Phụ kiện</button>
+      </div>
+    </section>
+
+    <!-- Sản phẩm nổi bật -->
+    <section class="products">
+      <h2>Sản phẩm nổi bật</h2>
+      <div class="product-grid">
+        <!-- Mỗi sản phẩm -->
+        <div class="product-card">
+          <img src="images/iphone.png" alt="iPhone" />
+          <h3>iPhone 14 Pro</h3>
+          <p>29.990.000đ</p>
+          <button>Thêm vào giỏ</button>
+        </div>
+        <!-- Thêm các sản phẩm khác tương tự -->
+      </div>
+    </section>
+    <section class="sale-products">
+      <h2>Sản phẩm giảm giá</h2>
+      <div class="product-list">
+        <div class="product-card">
+          <div class="heart-icon"><i class="far fa-heart"></i></div>
+          <img src="../source/iphone14.webp" alt="iPhone 14 Pro" />
+          <p class="product-name">Apple iPhone 14 Pro 512GB Gold (MQ233)</p>
+          <p class="price">$1437</p>
+          <button class="buy-btn">Mua ngay</button>
+        </div>
+
+        <div class="product-card">
+          <div class="heart-icon"><i class="far fa-heart"></i></div>
+          <img src="airpods-max.png" alt="AirPods Max" />
+          <p class="product-name">AirPods Max Silver</p>
+          <p class="price">$549</p>
+          <button class="buy-btn">Mua ngay</button>
+        </div>
+
+        <div class="product-card">
+          <div class="heart-icon"><i class="far fa-heart"></i></div>
+          <img src="../source/iphone14.webp" alt="Apple Watch" />
+          <p class="product-name">
+            Apple Watch Series 9 GPS 41mm Starlight Aluminium
+          </p>
+          <p class="price">$399</p>
+          <button class="buy-btn">Mua ngay</button>
+        </div>
+
+        <div class="product-card">
+          <div class="heart-icon"><i class="far fa-heart"></i></div>
+          <img src="iphone-silver.png" alt="iPhone 14 Pro 1TB" />
+          <p class="product-name">Apple iPhone 14 Pro 1TB Gold (MQ2V3)</p>
+          <p class="price">$1499</p>
+          <button class="buy-btn">Mua ngay</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Banner giữa trang -->
+    <section class="banner2">
+      <img src="../source/Banner 2.png" alt="" />
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="footer-container">
+        <div class="footer-column">
+          <div class="logo">
+            <img src="../source/Logo Vector.png" alt="Logo" />
+          </div>
+          <p>
+            Chúng tôi cung cấp các sản phẩm công nghệ, giúp khách hàng thỏa sức
+            trải nghiệm các dịch vụ, tiện ích nhanh chóng và hiệu quả.
+          </p>
+          <div class="social-icons">
+            <i class="fab fa-twitter"></i>
+            <i class="fab fa-facebook-f"></i>
+            <i class="fab fa-tiktok"></i>
+            <i class="fab fa-instagram"></i>
+          </div>
+        </div>
+
+        <div class="footer-column">
+          <h3>Dịch vụ</h3>
+          <ul>
+            <li>Chương trình khuyến mãi</li>
+            <li>Gift cards</li>
+            <li>Tín dụng và thanh toán</li>
+            <li>Dịch vụ hợp đồng</li>
+            <li>Ví điện tử</li>
+            <li>Thanh toán</li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Hỗ trợ cho người mua</h3>
+          <ul>
+            <li>Tìm kiếm đơn đặt hàng</li>
+            <li>Điều khoản giao hàng</li>
+            <li>Trao đổi và trả hàng</li>
+            <li>Chính sách bảo hành</li>
+            <li>Câu hỏi thường gặp</li>
+            <li>Chính sách và điều khoản</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
