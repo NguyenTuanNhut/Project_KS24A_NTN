@@ -70,6 +70,9 @@ function register(event) {
   if (data.password == "") {
     document.getElementById("password-error1").classList.add("error");
     hasError = true;
+  } else if (data.password.length < 8) {
+    document.getElementById("password-error2").classList.add("error");
+    hasError = true;
   } else if (data.password !== data.confirmPassword) {
     document.getElementById("password-error0").classList.add("error");
     hasError = true;

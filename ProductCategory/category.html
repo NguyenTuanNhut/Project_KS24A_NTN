@@ -36,10 +36,15 @@
 
           <!-- Filter + Search -->
           <div class="d-flex justify-content-end gap-2 mb-3">
-            <select class="form-select w-auto">
-              <option selected>Lọc theo trạng thái</option>
-              <option value="1">Đang hoạt động</option>
-              <option value="2">Ngưng hoạt động</option>
+            <select
+              id="status"
+              class="form-select w-auto"
+              onchange="filterStatus()"
+            >
+              <option selected disabled>Lọc theo trạng thái</option>
+              <option value="true">Đang hoạt động</option>
+              <option value="false">Ngưng hoạt động</option>
+              <option value="">Tất cả</option>
             </select>
             <input
               type="text"

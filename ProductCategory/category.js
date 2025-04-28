@@ -71,32 +71,32 @@ function addCategory(event) {
   renderCategories();
 }
 
-function renderCategories() {
+function renderCategories(newFil = categories) {
   const tbody = document.querySelector("table tbody");
   tbody.innerHTML = "";
 
-  categories.forEach((category) => {
+  newFil.forEach((category) => {
     const row = document.createElement("tr");
 
     row.innerHTML = `
-        <td>${category.id}</td>
-        <td>${category.name}</td>
-        <td>
-          <span class="${
-            category.status ? "status-active" : "status-inactive"
-          }">
-            ${category.status ? "Đang hoạt động" : "Ngưng hoạt động"}
-          </span>
-        </td>
-        <td class="text-center">
-          <button class="btn btn-sm btn-warning" onclick="openEditModal('${
-            category.id
-          }')">✏️</button>
-          <button class="btn btn-sm btn-danger" onclick="deleteCategory('${
-            category.id
-          }')">🗑️</button>
-        </td>
-      `;
+          <td>${category.id}</td>
+          <td>${category.name}</td>
+          <td>
+            <span class="${
+              category.status ? "status-active" : "status-inactive"
+            }">
+              ${category.status ? "Đang hoạt động" : "Ngưng hoạt động"}
+            </span>
+          </td>
+          <td class="text-center">
+            <button class="btn btn-sm btn-warning" onclick="openEditModal('${
+              category.id
+            }')">✏️</button>
+            <button class="btn btn-sm btn-danger" onclick="deleteCategory('${
+              category.id
+            }')">🗑️</button>
+          </td>
+        `;
 
     tbody.appendChild(row);
   });
@@ -118,9 +118,26 @@ function openEditModal(categoryId) {
 }
 
 function deleteCategory(categoryId) {
-  categories = categories.filter((c) => c.id !== categoryId);
-  localStorage.setItem("categories", JSON.stringify(categories));
-  renderCategories();
+  if (window.confirm("bạn có chắc chắn muốn xoá?")) {
+    categories = categories.filter((c) => c.id !== categoryId);
+    localStorage.setItem("categories", JSON.stringify(categories));
+    renderCategories();
+  }
+}
+function filterStatus() {
+  const onStatus = document.getElementById("status").value;
+
+  let statusList;
+  if (onStatus === "") {
+    statusList = categories;
+  } else {
+    const isActive = onStatus === "true";
+    statusList = categories.filter(
+      (categorie) => categorie.status === isActive
+    );
+  }
+
+  renderCategories(statusList);
 }
 
 renderCategories();
