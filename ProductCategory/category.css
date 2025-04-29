@@ -65,3 +65,12 @@ form p.error {
 .input-error {
   border: 2px solid red;
 }
+#search-icon {
+  position: relative;
+  right: 30px;
+  top: 5px;
+  cursor: pointer;
+}
+#sort-icon {
+  cursor: pointer;
+}

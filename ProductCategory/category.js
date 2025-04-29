@@ -1,3 +1,5 @@
+const ITEMS_PER_PAGE = 10;
+let currentPage = 1;
 let categories = JSON.parse(localStorage.getItem("categories")) || [];
 let editingCategoryId = null;
 
@@ -75,31 +77,37 @@ function renderCategories(newFil = categories) {
   const tbody = document.querySelector("table tbody");
   tbody.innerHTML = "";
 
-  newFil.forEach((category) => {
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const endIndex = startIndex + ITEMS_PER_PAGE;
+  const paginatedCategories = newFil.slice(startIndex, endIndex);
+
+  paginatedCategories.forEach((category) => {
     const row = document.createElement("tr");
 
     row.innerHTML = `
-          <td>${category.id}</td>
-          <td>${category.name}</td>
-          <td>
-            <span class="${
-              category.status ? "status-active" : "status-inactive"
-            }">
-              ${category.status ? "Đang hoạt động" : "Ngưng hoạt động"}
-            </span>
-          </td>
-          <td class="text-center">
-            <button class="btn btn-sm btn-warning" onclick="openEditModal('${
-              category.id
-            }')">✏️</button>
-            <button class="btn btn-sm btn-danger" onclick="deleteCategory('${
-              category.id
-            }')">🗑️</button>
-          </td>
-        `;
+         <td>${category.id}</td>
+         <td>${category.name}</td>
+         <td>
+           <span class="${
+             category.status ? "status-active" : "status-inactive"
+           }">
+             ${category.status ? "Đang hoạt động" : "Ngưng hoạt động"}
+           </span>
+         </td>
+         <td class="text-center">
+           <button class="btn btn-sm btn-warning" onclick="openEditModal('${
+             category.id
+           }')"><i class="fa-solid fa-pencil"></i></button>
+           <button class="btn btn-sm btn-danger" onclick="deleteCategory('${
+             category.id
+           }')"><i class="fa-solid fa-trash"></i></button>
+         </td>
+       `;
 
     tbody.appendChild(row);
   });
+
+  renderPagination(newFil);
 }
 
 function openEditModal(categoryId) {
@@ -124,20 +132,92 @@ function deleteCategory(categoryId) {
     renderCategories();
   }
 }
-function filterStatus() {
-  const onStatus = document.getElementById("status").value;
 
-  let statusList;
-  if (onStatus === "") {
-    statusList = categories;
-  } else {
-    const isActive = onStatus === "true";
-    statusList = categories.filter(
-      (categorie) => categorie.status === isActive
+function applyFilters() {
+  const statusValue = document.getElementById("status").value;
+  const keyword = document
+    .querySelector('input[type="text"]')
+    .value.trim()
+    .toLowerCase();
+
+  let filtered = categories;
+
+  // status
+  if (statusValue !== "") {
+    const isActive = statusValue === "true";
+    filtered = filtered.filter((category) => category.status === isActive);
+  }
+
+  //search
+  if (keyword !== "") {
+    filtered = filtered.filter((category) =>
+      category.name.toLowerCase().includes(keyword)
     );
   }
 
-  renderCategories(statusList);
+  currentPage = 1; // quay về trang đầu khi tìm kiếm/lọc
+  renderCategories(filtered);
+}
+
+function sortByName(order = "asc") {
+  const sortedCategories = [...categories].sort((a, b) => {
+    if (order === "asc") {
+      return a.name.localeCompare(b.name); // Tăng dần
+    } else {
+      return b.name.localeCompare(a.name); // Giảm dần
+    }
+  });
+
+  currentPage = 1; // quay về trang 1 khi sắp xếp
+  renderCategories(sortedCategories);
+}
+
+function renderPagination(newFil = categories) {
+  const pagination = document.querySelector(".pagination");
+  pagination.innerHTML = "";
+
+  const totalPages = Math.ceil(newFil.length / ITEMS_PER_PAGE);
+
+  // Nút "Trước"
+  const prevItem = document.createElement("li");
+  prevItem.className = `page-item ${currentPage === 1 ? "disabled" : ""}`;
+  prevItem.innerHTML = `<a class="page-link" href="#">Trước</a>`;
+  prevItem.onclick = function (e) {
+    e.preventDefault();
+    if (currentPage > 1) {
+      currentPage--;
+      renderCategories(newFil);
+    }
+  };
+  pagination.appendChild(prevItem);
+
+  // Các nút số trang
+  for (let i = 1; i <= totalPages; i++) {
+    const pageItem = document.createElement("li");
+    pageItem.className = `page-item ${currentPage === i ? "active" : ""}`;
+    pageItem.innerHTML = `<a class="page-link" href="#">${i}</a>`;
+    pageItem.onclick = function (e) {
+      e.preventDefault();
+      currentPage = i;
+      renderCategories(newFil);
+    };
+    pagination.appendChild(pageItem);
+  }
+
+  // Nút "Sau"
+  const nextItem = document.createElement("li");
+  nextItem.className = `page-item ${
+    currentPage === totalPages ? "disabled" : ""
+  }`;
+  nextItem.innerHTML = `<a class="page-link" href="#">Sau</a>`;
+  nextItem.onclick = function (e) {
+    e.preventDefault();
+    if (currentPage < totalPages) {
+      currentPage++;
+      renderCategories(newFil);
+    }
+  };
+  pagination.appendChild(nextItem);
 }
 
 renderCategories();

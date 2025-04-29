@@ -18,7 +18,6 @@ function authenCheck() {
   }
 }
 authenCheck();
-
 // Hàm lấy dữ liệu từ form
 function getFormData(formElement) {
   const formData = new FormData(formElement);
@@ -80,16 +79,17 @@ function register(event) {
 
   if (hasError) return;
 
-  data.role = "USER";
+  data.role = "user";
   userList.push(data);
   localStorage.setItem("userList", JSON.stringify(userList));
-  container.classList.remove("right-panel-active");
+  alert("đăng kí thành công");
+  window.location.href = "/login//signin.html";
   form.reset();
 }
-
 // Đăng nhập
 function checkSignIn(event) {
   event.preventDefault();
+  let hasError;
   let form = event.target;
   let inputs = form.querySelectorAll("input");
   let email = inputs[0].value.trim();
@@ -115,7 +115,16 @@ function checkSignIn(event) {
     hasError = true;
   }
 
-  if (hasError) return;
-  localStorage.setItem("userLogin", JSON.stringify(user));
-  window.location.href = "/";
+  if (hasError) {
+    return;
+  }
+
+  // Kiểm tra nếu là tài khoản admin
+  if (user.role === "admin") {
+    alert("Đăng nhập thành công với tài khoản admin");
+    window.location.href = "/ProductCategory/statistics.html";
+  } else {
+    alert("Đăng nhập thành công");
+    window.location.href = "/home/index.html";
+  }
 }
