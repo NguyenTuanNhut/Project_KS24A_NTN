@@ -3,14 +3,6 @@ const signUpButton = document.getElementById("signUp");
 const signInButton = document.getElementById("signIn");
 const container = document.getElementById("container");
 
-signUpButton.addEventListener("click", () => {
-  container.classList.add("right-panel-active");
-});
-
-signInButton.addEventListener("click", () => {
-  container.classList.remove("right-panel-active");
-});
-
 // Kiểm tra nếu đã đăng nhập thì chuyển hướng
 function authenCheck() {
   if (localStorage.getItem("userLogin")) {
@@ -18,6 +10,18 @@ function authenCheck() {
   }
 }
 authenCheck();
+function admin() {
+  let email = "nhutnguyen@gmail.com";
+  let password = "11111111";
+  let role = "admin";
+  userList.push({
+    email,
+    password,
+    role,
+  });
+  localStorage.setItem("userList", JSON.stringify(userList));
+}
+admin();
 // Hàm lấy dữ liệu từ form
 function getFormData(formElement) {
   const formData = new FormData(formElement);
@@ -78,7 +82,6 @@ function register(event) {
   }
 
   if (hasError) return;
-
   data.role = "user";
   userList.push(data);
   localStorage.setItem("userList", JSON.stringify(userList));
@@ -120,7 +123,7 @@ function checkSignIn(event) {
   }
 
   // Kiểm tra nếu là tài khoản admin
-  if (user.role === "admin") {
+  if (user.role == "admin") {
     alert("Đăng nhập thành công với tài khoản admin");
     window.location.href = "/ProductCategory/statistics.html";
   } else {

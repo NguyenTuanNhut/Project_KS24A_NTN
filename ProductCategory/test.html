@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="test.css" />
+  </head>
+  <body>
+    <div class="modal-overlay">
+      <div class="modal">
+        <h2>Thêm mới sản phẩm</h2>
+        <form>
+          <div class="form-row">
+            <label>Mã sản phẩm *</label>
+            <input type="text" required />
+          </div>
+          <div class="form-row">
+            <label>Tên sản phẩm *</label>
+            <input type="text" required />
+          </div>
+          <div class="form-row">
+            <label>Danh mục *</label>
+            <select>
+              <option>Điện thoại</option>
+            </select>
+          </div>
+          <div class="form-row status">
+            <label>Trạng thái</label>
+            <label
+              ><input type="radio" name="status" checked /> Đang hoạt
+              động</label
+            >
+            <label><input type="radio" name="status" /> Ngừng hoạt động</label>
+          </div>
+          <div class="form-row small">
+            <label>Số lượng</label>
+            <input type="number" value="1" />
+            <label>Giá</label>
+            <input type="text" value="10.000.000" />
+            <label>Giảm giá</label>
+            <input type="number" value="10" />
+          </div>
+          <div class="form-row">
+            <label>Hình ảnh *</label>
+            <input type="text" value="https://..." required />
+          </div>
+          <div class="form-row">
+            <label>Chi tiết sản phẩm</label>
+            <textarea rows="3"></textarea>
+          </div>
+          <div class="form-buttons">
+            <button type="button" class="cancel">Hủy</button>
+            <button type="submit">Thêm</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

@@ -2,7 +2,7 @@ const ITEMS_PER_PAGE = 10;
 let currentPage = 1;
 let categories = JSON.parse(localStorage.getItem("categories")) || [];
 let editingCategoryId = null;
-
+// modal
 function openModal() {
   document.getElementById("overlay").style.display = "block";
   document.getElementById("modal").style.display = "block";
@@ -23,7 +23,7 @@ function clearValidation() {
   document.getElementById("id-error").style.display = "none";
   document.getElementById("name-error").style.display = "none";
 }
-
+// thêm danh mục
 function addCategory(event) {
   event.preventDefault();
 
@@ -35,6 +35,7 @@ function addCategory(event) {
 
   let isValid = true;
 
+  // Kiểm tra rỗng
   if (idCate === "") {
     document.getElementById("maDanhMuc").classList.add("input-error");
     document.getElementById("id-error").style.display = "block";
@@ -51,6 +52,31 @@ function addCategory(event) {
   } else {
     document.getElementById("tenDanhMuc").classList.remove("input-error");
     document.getElementById("name-error").style.display = "none";
+  }
+
+  if (!editingCategoryId) {
+    const duplicateId = categories.some((c) => c.id === idCate);
+    const duplicateName = categories.some(
+      (c) => c.name.toLowerCase() === name.toLowerCase()
+    );
+
+    if (duplicateId) {
+      document.getElementById("maDanhMuc").classList.add("input-error");
+      document.getElementById("id-error2").style.display = "block";
+      isValid = false;
+    } else {
+      document.getElementById("maDanhMuc").classList.remove("input-error");
+      document.getElementById("id-error2").style.display = "none";
+    }
+
+    if (duplicateName) {
+      document.getElementById("tenDanhMuc").classList.add("input-error");
+      document.getElementById("name-error2").style.display = "block";
+      isValid = false;
+    } else {
+      document.getElementById("tenDanhMuc").classList.remove("input-error");
+      document.getElementById("name-error2").style.display = "none";
+    }
   }
 
   if (!isValid) return;
@@ -126,7 +152,23 @@ function openEditModal(categoryId) {
 }
 
 function deleteCategory(categoryId) {
-  if (window.confirm("bạn có chắc chắn muốn xoá?")) {
+  const categoryCheck = categories.find((c) => c.id === categoryId);
+
+  // Lấy danh sách sản phẩm từ localStorage
+  const productsInStorage = JSON.parse(localStorage.getItem("products")) || [];
+
+  // Kiểm tra có sản phẩm nào đang dùng name của danh mục không
+  const hasProduct = productsInStorage.some(
+    (p) => p.category === categoryCheck.name
+  );
+
+  if (hasProduct) {
+    alert("Không thể xóa vì có sản phẩm thuộc danh mục này.");
+    return;
+  }
+
+  // Xác nhận xóa
+  if (window.confirm("Bạn có chắc chắn muốn xoá danh mục này?")) {
     categories = categories.filter((c) => c.id !== categoryId);
     localStorage.setItem("categories", JSON.stringify(categories));
     renderCategories();
