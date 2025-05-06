@@ -16,11 +16,13 @@
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <!-- Header -->
+    <!--  PHẦN HEADER  -->
     <header>
       <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
+          <!-- Logo cửa hàng -->
           <img src="../source/Logo.png" alt="" />
+          <!-- Thanh tìm kiếm -->
           <form class="d-flex search-box" role="search">
             <input
               class="form-control me-2"
@@ -32,7 +34,7 @@
               <i class="fa-solid fa-magnifying-glass search-icon"></i>
             </span>
           </form>
-
+          <!-- Nút toggle menu cho màn hình nhỏ -->
           <button
             class="navbar-toggler"
             type="button"
@@ -44,6 +46,7 @@
           >
             <span class="navbar-toggler-icon"></span>
           </button>
+          <!-- Menu điều hướng -->
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
@@ -60,14 +63,15 @@
             </ul>
           </div>
         </div>
+        <!-- Biểu tượng người dùng và giỏ hàng -->
         <div class="icons">
           <i onclick="logOut()" class="fas fa-user"></i>
           <i class="fas fa-shopping-cart"></i>
         </div>
       </nav>
     </header>
-    <nav></nav>
-    <!-- Banner -->
+
+    <!--  PHẦN BANNER TRÌNH CHIẾU  -->
     <section
       id="carouselExample"
       class="carousel slide"
@@ -89,6 +93,8 @@
           />
         </div>
       </div>
+
+      <!-- Nút chuyển banner trái -->
       <button
         class="carousel-control-prev"
         type="button"
@@ -98,6 +104,8 @@
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
         <span class="visually-hidden">Previous</span>
       </button>
+
+      <!-- Nút chuyển banner phải -->
       <button
         class="carousel-control-next"
         type="button"
@@ -109,7 +117,7 @@
       </button>
     </section>
 
-    <!-- Categories -->
+    <!-- PHẦN DANH MỤC SẢN PHẨM -->
     <section class="categories">
       <h2>Danh mục sản phẩm</h2>
       <div class="category-buttons">
@@ -121,23 +129,26 @@
       </div>
     </section>
 
-    <!-- Sản phẩm nổi bật -->
+    <!-- PHẦN SẢN PHẨM NỔI BẬT -->
     <section class="products">
       <h2>Sản phẩm nổi bật</h2>
       <div class="product-grid">
-        <!-- Mỗi sản phẩm -->
+        <!-- Thẻ sản phẩm đơn -->
         <div class="product-card">
-          <img src="images/iphone.png" alt="iPhone" />
+          <img src="../source/iphone14.webp" alt="iPhone 14 Pro" />
           <h3>iPhone 14 Pro</h3>
           <p>29.990.000đ</p>
           <button>Thêm vào giỏ</button>
         </div>
-        <!-- Thêm các sản phẩm khác tương tự -->
+        <!-- Thêm các sản phẩm khác ở đây -->
       </div>
     </section>
+
+    <!--  PHẦN SẢN PHẨM GIẢM GIÁ  -->
     <section class="sale-products">
       <h2>Sản phẩm giảm giá</h2>
       <div class="product-list">
+        <!-- Sản phẩm 1 -->
         <div class="product-card">
           <div class="heart-icon"><i class="far fa-heart"></i></div>
           <img src="../source/iphone14.webp" alt="iPhone 14 Pro" />
@@ -146,40 +157,40 @@
           <button class="buy-btn">Mua ngay</button>
         </div>
 
+        <!-- Sản phẩm 2 -->
         <div class="product-card">
           <div class="heart-icon"><i class="far fa-heart"></i></div>
-          <img src="airpods-max.png" alt="AirPods Max" />
+          <img src="../source/iphone14.webp" alt="iPhone 14 Pro" />
           <p class="product-name">AirPods Max Silver</p>
           <p class="price">$549</p>
           <button class="buy-btn">Mua ngay</button>
         </div>
 
+        <!-- Sản phẩm 3 -->
         <div class="product-card">
           <div class="heart-icon"><i class="far fa-heart"></i></div>
-          <img src="../source/iphone14.webp" alt="Apple Watch" />
+          <img src="../source/iphone14.webp" alt="iPhone 14 Pro" />
           <p class="product-name">
             Apple Watch Series 9 GPS 41mm Starlight Aluminium
           </p>
           <p class="price">$399</p>
           <button class="buy-btn">Mua ngay</button>
         </div>
-
+        <!-- Sản phẩm 4 -->
         <div class="product-card">
           <div class="heart-icon"><i class="far fa-heart"></i></div>
-          <img src="iphone-silver.png" alt="iPhone 14 Pro 1TB" />
+          <img src="../source/iphone14.webp" alt="iPhone 14 Pro" />
           <p class="product-name">Apple iPhone 14 Pro 1TB Gold (MQ2V3)</p>
           <p class="price">$1499</p>
           <button class="buy-btn">Mua ngay</button>
         </div>
       </div>
     </section>
-
-    <!-- Banner giữa trang -->
+    <!-- BANNER Ở CUỐI TRANG -->
     <section class="banner2">
       <img src="../source/Banner 2.png" alt="" />
     </section>
-
-    <!-- Footer -->
+    <!--  PHẦN FOOTER  -->
     <footer class="footer">
       <div class="footer-container">
         <div class="footer-column">

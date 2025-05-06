@@ -1,11 +1,12 @@
+// Khi trang tải xong, lấy danh sách danh mục từ localStorage và hiển thị trong ô chọn
 window.onload = function () {
   const productCategorySelect = document.getElementById("productCategory");
   const storedCategories = JSON.parse(localStorage.getItem("categories")) || [];
 
-  // Clear options
+  // Xóa các lựa chọn cũ
   productCategorySelect.innerHTML = "";
 
-  // Add category options
+  // Thêm các danh mục vào ô chọn
   storedCategories.forEach((category) => {
     const option = document.createElement("option");
     option.value = category.name;
@@ -16,18 +17,32 @@ window.onload = function () {
   renderData();
 };
 
+let flag = true;
+
+// Mở modal: nếu đang thêm mới thì đặt lại form và button, nếu sửa thì giữ nguyên
 function openModal() {
+  const form = document.getElementById("addProductForm");
+  if (flag) {
+    document.getElementById("editButton").textContent = "Thêm";
+    form.reset();
+  } else {
+    document.getElementById("editButton").textContent = "Cập nhật";
+  }
   document.getElementById("productModal").classList.remove("d-none");
 }
 
+// Đóng modal và reset trạng thái về thêm mới
 function closeModal() {
   document.getElementById("productModal").classList.add("d-none");
+  flag = true;
 }
 
-var products = JSON.parse(localStorage.getItem("products")) || [];
+// Lấy dữ liệu sản phẩm từ localStorage hoặc tạo mảng rỗng nếu chưa có
+let products = JSON.parse(localStorage.getItem("products")) || [];
 const ITEMS_PER_PAGE = 10;
 let currentPage = 1;
 
+// Xử lý sự kiện khi submit form thêm/sửa sản phẩm
 document
   .getElementById("addProductForm")
   .addEventListener("submit", function (e) {
@@ -35,11 +50,15 @@ document
     addProduct(e);
   });
 
+// Hàm thêm hoặc cập nhật sản phẩm
 function addProduct(event) {
   const form = event.target;
+  const id = form.productId.value.trim();
+  const editingId = form.dataset.editingId;
+  const isEdit = form.dataset.mode === "edit";
 
-  const newProduct = {
-    id: form.productId.value.trim(),
+  const updatedProduct = {
+    id,
     name: form.productName.value.trim(),
     category: form.productCategory.value,
     status: form.status.value,
@@ -50,33 +69,42 @@ function addProduct(event) {
     description: form.productDescription.value.trim(),
   };
 
-  // Validate ID
-  if (!newProduct.id) {
+  if (!id) {
     alert("Bạn phải nhập ID sản phẩm.");
     return;
   }
 
-  // Kiểm tra ID trùng
-  if (products.some((product) => product.id === newProduct.id)) {
+  if (!isEdit && products.some((product) => product.id === id)) {
     alert("Sản phẩm với ID này đã tồn tại.");
     return;
   }
 
-  products.push(newProduct);
-  localStorage.setItem("products", JSON.stringify(products));
+  if (isEdit) {
+    const index = products.findIndex((p) => p.id === editingId);
+    if (index !== -1) {
+      products[index] = updatedProduct;
+    }
+  } else {
+    products.push(updatedProduct);
+  }
 
+  localStorage.setItem("products", JSON.stringify(products));
   form.reset();
+  form.dataset.mode = "";
+  form.dataset.editingId = "";
+  document.getElementById("productId").readOnly = false;
+
   closeModal();
   renderData();
 }
 
+// Hiển thị danh sách sản phẩm theo trang hiện tại
 function renderData(data = products) {
   const tbody = document.querySelector("table tbody");
   tbody.innerHTML = "";
 
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const endIndex = startIndex + ITEMS_PER_PAGE;
-  const paginated = data.slice(startIndex, endIndex);
+  const paginated = data.slice(startIndex, startIndex + ITEMS_PER_PAGE);
 
   paginated.forEach((product) => {
     const row = document.createElement("tr");
@@ -112,6 +140,7 @@ function renderData(data = products) {
   renderPagination(data);
 }
 
+// Hiển thị phân trang theo số sản phẩm và trang hiện tại
 function renderPagination(data) {
   const totalPages = Math.ceil(data.length / ITEMS_PER_PAGE);
   const pagination = document.querySelector(".pagination");
@@ -149,10 +178,49 @@ function renderPagination(data) {
     createPageItem("Sau", currentPage + 1, currentPage === totalPages)
   );
 }
+
+// Xoá sản phẩm khỏi danh sách và cập nhật localStorage
 function deleteProduct(id) {
   const confirmDelete = confirm("Bạn có chắc chắn muốn xóa sản phẩm này?");
   if (!confirmDelete) return;
   products = products.filter((product) => product.id !== id);
   localStorage.setItem("products", JSON.stringify(products));
+
+  // Nếu trang hiện tại không còn sản phẩm nào thì quay lại trang trước nếu có
+  const maxPages = Math.ceil(products.length / ITEMS_PER_PAGE);
+  if (currentPage > maxPages) {
+    currentPage = maxPages;
+  }
   renderData();
+}
+
+// Hiển thị dữ liệu sản phẩm lên form để chỉnh sửa
+function editProduct(id) {
+  flag = false;
+  const product = products.find((p) => p.id === id);
+  if (!product) return;
+
+  const form = document.getElementById("addProductForm");
+  form.reset();
+  form.dataset.mode = "edit";
+  form.dataset.editingId = id;
+
+  form.productId.value = product.id;
+  form.productName.value = product.name;
+  form.productCategory.value = product.category;
+  form.productQuantity.value = product.quantity;
+  form.productPrice.value = product.price;
+  form.productDiscount.value = product.discount;
+  form.productImage.value = product.image;
+  form.productDescription.value = product.description;
+
+  if (product.status === "active") {
+    document.getElementById("statusActive").checked = true;
+  } else {
+    document.getElementById("statusInactive").checked = true;
+  }
+
+  document.getElementById("productId").readOnly = true;
+  openModal();
+  document.getElementById("editButton").textContent = "Cập nhật";
 }

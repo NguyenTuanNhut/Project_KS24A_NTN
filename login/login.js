@@ -10,6 +10,7 @@ function authenCheck() {
   }
 }
 authenCheck();
+// Admin
 function admin() {
   let email = "nhutnguyen@gmail.com";
   let password = "11111111";
@@ -38,7 +39,7 @@ function ValidEmail(email) {
   return regex.test(email);
 }
 
-// Đăng ký tài khoản
+// Đăng ký
 function register(event) {
   event.preventDefault();
   let form = event.target;
@@ -86,7 +87,7 @@ function register(event) {
   userList.push(data);
   localStorage.setItem("userList", JSON.stringify(userList));
   alert("đăng kí thành công");
-  window.location.href = "/login//signin.html";
+  window.location.href = "/login/signin.html";
   form.reset();
 }
 // Đăng nhập

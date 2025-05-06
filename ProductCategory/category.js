@@ -2,12 +2,14 @@ const ITEMS_PER_PAGE = 10;
 let currentPage = 1;
 let categories = JSON.parse(localStorage.getItem("categories")) || [];
 let editingCategoryId = null;
-// modal
+
+// Hiển thị modal
 function openModal() {
   document.getElementById("overlay").style.display = "block";
   document.getElementById("modal").style.display = "block";
 }
 
+// Đóng modal và reset form
 function closeModal() {
   document.getElementById("overlay").style.display = "none";
   document.getElementById("modal").style.display = "none";
@@ -17,13 +19,15 @@ function closeModal() {
   clearValidation();
 }
 
+// Xóa thông báo lỗi
 function clearValidation() {
   document.getElementById("maDanhMuc").classList.remove("input-error");
   document.getElementById("tenDanhMuc").classList.remove("input-error");
   document.getElementById("id-error").style.display = "none";
   document.getElementById("name-error").style.display = "none";
 }
-// thêm danh mục
+
+// Thêm hoặc cập nhật danh mục
 function addCategory(event) {
   event.preventDefault();
 
@@ -35,7 +39,7 @@ function addCategory(event) {
 
   let isValid = true;
 
-  // Kiểm tra rỗng
+  // Kiểm tra trường rỗng
   if (idCate === "") {
     document.getElementById("maDanhMuc").classList.add("input-error");
     document.getElementById("id-error").style.display = "block";
@@ -54,6 +58,7 @@ function addCategory(event) {
     document.getElementById("name-error").style.display = "none";
   }
 
+  // Kiểm tra trùng lặp khi thêm mới
   if (!editingCategoryId) {
     const duplicateId = categories.some((c) => c.id === idCate);
     const duplicateName = categories.some(
@@ -65,7 +70,6 @@ function addCategory(event) {
       document.getElementById("id-error2").style.display = "block";
       isValid = false;
     } else {
-      document.getElementById("maDanhMuc").classList.remove("input-error");
       document.getElementById("id-error2").style.display = "none";
     }
 
@@ -74,7 +78,6 @@ function addCategory(event) {
       document.getElementById("name-error2").style.display = "block";
       isValid = false;
     } else {
-      document.getElementById("tenDanhMuc").classList.remove("input-error");
       document.getElementById("name-error2").style.display = "none";
     }
   }
@@ -87,6 +90,7 @@ function addCategory(event) {
     status: statusValue === "true",
   };
 
+  // Nếu đang chỉnh sửa thì cập nhật, ngược lại thêm mới
   if (editingCategoryId) {
     const index = categories.findIndex((c) => c.id === editingCategoryId);
     if (index !== -1) categories[index] = categoryData;
@@ -99,6 +103,7 @@ function addCategory(event) {
   renderCategories();
 }
 
+// Hiển thị danh sách danh mục
 function renderCategories(newFil = categories) {
   const tbody = document.querySelector("table tbody");
   tbody.innerHTML = "";
@@ -111,31 +116,33 @@ function renderCategories(newFil = categories) {
     const row = document.createElement("tr");
 
     row.innerHTML = `
-         <td>${category.id}</td>
-         <td>${category.name}</td>
-         <td>
-           <span class="${
-             category.status ? "status-active" : "status-inactive"
-           }">
-             ${category.status ? "Đang hoạt động" : "Ngưng hoạt động"}
-           </span>
-         </td>
-         <td class="text-center">
-           <button class="btn btn-sm btn-warning" onclick="openEditModal('${
-             category.id
-           }')"><i class="fa-solid fa-pencil"></i></button>
-           <button class="btn btn-sm btn-danger" onclick="deleteCategory('${
-             category.id
-           }')"><i class="fa-solid fa-trash"></i></button>
-         </td>
-       `;
-
+      <td>${category.id}</td>
+      <td>${category.name}</td>
+      <td>
+        <span class="${category.status ? "status-active" : "status-inactive"}">
+          ${category.status ? "Đang hoạt động" : "Ngưng hoạt động"}
+        </span>
+      </td>
+      <td class="text-center">
+        <button class="btn btn-sm btn-warning" onclick="openEditModal('${
+          category.id
+        }')">
+          <i class="fa-solid fa-pencil"></i>
+        </button>
+        <button class="btn btn-sm btn-danger" onclick="deleteCategory('${
+          category.id
+        }')">
+          <i class="fa-solid fa-trash"></i>
+        </button>
+      </td>
+    `;
     tbody.appendChild(row);
   });
 
   renderPagination(newFil);
 }
 
+// Mở modal chỉnh sửa danh mục
 function openEditModal(categoryId) {
   const category = categories.find((c) => c.id === categoryId);
 
@@ -151,13 +158,12 @@ function openEditModal(categoryId) {
   }
 }
 
+// Xóa danh mục (nếu không liên kết sản phẩm)
 function deleteCategory(categoryId) {
   const categoryCheck = categories.find((c) => c.id === categoryId);
-
-  // Lấy danh sách sản phẩm từ localStorage
   const productsInStorage = JSON.parse(localStorage.getItem("products")) || [];
 
-  // Kiểm tra có sản phẩm nào đang dùng name của danh mục không
+  // Kiểm tra danh mục có sản phẩm không
   const hasProduct = productsInStorage.some(
     (p) => p.category === categoryCheck.name
   );
@@ -167,7 +173,6 @@ function deleteCategory(categoryId) {
     return;
   }
 
-  // Xác nhận xóa
   if (window.confirm("Bạn có chắc chắn muốn xoá danh mục này?")) {
     categories = categories.filter((c) => c.id !== categoryId);
     localStorage.setItem("categories", JSON.stringify(categories));
@@ -175,6 +180,7 @@ function deleteCategory(categoryId) {
   }
 }
 
+// Áp dụng bộ lọc theo trạng thái và từ khóa
 function applyFilters() {
   const statusValue = document.getElementById("status").value;
   const keyword = document
@@ -184,36 +190,34 @@ function applyFilters() {
 
   let filtered = categories;
 
-  // status
   if (statusValue !== "") {
     const isActive = statusValue === "true";
     filtered = filtered.filter((category) => category.status === isActive);
   }
 
-  //search
   if (keyword !== "") {
     filtered = filtered.filter((category) =>
       category.name.toLowerCase().includes(keyword)
     );
   }
 
-  currentPage = 1; // quay về trang đầu khi tìm kiếm/lọc
+  currentPage = 1;
   renderCategories(filtered);
 }
 
+// Sắp xếp danh mục theo tên
 function sortByName(order = "asc") {
   const sortedCategories = [...categories].sort((a, b) => {
-    if (order === "asc") {
-      return a.name.localeCompare(b.name); // Tăng dần
-    } else {
-      return b.name.localeCompare(a.name); // Giảm dần
-    }
+    return order === "asc"
+      ? a.name.localeCompare(b.name)
+      : b.name.localeCompare(a.name);
   });
 
-  currentPage = 1; // quay về trang 1 khi sắp xếp
+  currentPage = 1;
   renderCategories(sortedCategories);
 }
 
+// Hiển thị phân trang
 function renderPagination(newFil = categories) {
   const pagination = document.querySelector(".pagination");
   pagination.innerHTML = "";
